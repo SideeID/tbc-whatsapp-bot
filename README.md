@@ -168,13 +168,3 @@ Kontribusi sangat dipersilakan! Jangan ragu untuk mengirimkan Pull Request.
 - [Google Gemini AI](https://ai.google.dev/)
 - World Health Organization dan CDC untuk pedoman informasi TBC
 
-
-
-
-
-
-
-git init 
-git remote add origin https://github.com/SideeID/tbc-whatsapp-bot.git
-git branch -M main
-
