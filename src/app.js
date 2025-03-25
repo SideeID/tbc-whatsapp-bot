@@ -1,4 +1,8 @@
-const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  DisconnectReason,
+} = require('@whiskeysockets/baileys');
 const { Boom } = require('@hapi/boom');
 const pino = require('pino');
 const qrcode = require('qrcode-terminal');
@@ -6,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const { handleIncomingMessage } = require('./controllers');
 const { isWithinWorkHours } = require('./utils/helpers');
+const { setupApi } = require('./api');
 
 const sessionsDir = path.join(__dirname, '..', 'sessions');
 if (!fs.existsSync(sessionsDir)) {
@@ -14,25 +19,37 @@ if (!fs.existsSync(sessionsDir)) {
 
 const startWhatsAppBot = async () => {
   const { state, saveCreds } = await useMultiFileAuthState('sessions');
-  
+
   const sock = makeWASocket({
     printQRInTerminal: true,
     auth: state,
-    logger: pino({ level: 'silent' })
+    logger: pino({ level: 'silent' }),
   });
-  
+
+  sock.isConnected = () => sock.user !== undefined;
+
+  const apiApp = setupApi(sock);
+  const PORT = process.env.PORT || 3000;
+
+  apiApp.listen(PORT, () => {
+    console.log(`API server listening on port ${PORT}`);
+  });
+
   sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr } = update;
-    
+
     if (qr) {
       qrcode.generate(qr, { small: true });
       console.log('QR Code generated. Scan to connect.');
     }
-    
+
     if (connection === 'close') {
-      const shouldReconnect = (lastDisconnect?.error instanceof Boom) ? 
-        lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut : true;
-      
+      const shouldReconnect =
+        lastDisconnect?.error instanceof Boom
+          ? lastDisconnect.error.output.statusCode !==
+            DisconnectReason.loggedOut
+          : true;
+
       if (shouldReconnect) {
         console.log('Connection closed due to error, reconnecting...');
         startWhatsAppBot();
@@ -40,7 +57,7 @@ const startWhatsAppBot = async () => {
         console.log('Connection closed. You are logged out.');
       }
     }
-    
+
     if (connection === 'open') {
       console.log('Bot connected successfully!');
     }
@@ -48,17 +65,17 @@ const startWhatsAppBot = async () => {
 
   sock.ev.on('messages.upsert', async ({ messages }) => {
     for (const message of messages) {
-      if (message.key.fromMe) continue; 
-      
+      if (message.key.fromMe) continue;
+
       const isGroup = message.key.remoteJid.endsWith('@g.us');
       if (isGroup) continue;
-      
+
       await handleIncomingMessage(sock, message);
     }
   });
-  
+
   sock.ev.on('creds.update', saveCreds);
-  
+
   return sock;
 };
 
