@@ -1,0 +1,26 @@
+services:
+  tbc-whatsapp-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tbc-whatsapp-bot
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    volumes:
+      - tbc-bot-sessions:/usr/src/app/sessions
+      - tbc-bot-db:/usr/src/app/database.sqlite
+    env_file:
+      - .env
+    networks:
+      - tbc-bot-network
+
+networks:
+  tbc-bot-network:
+    driver: bridge
+
+volumes:
+  tbc-bot-sessions:
+    driver: local
+  tbc-bot-db:
+    driver: local
