@@ -8,7 +8,6 @@ services:
     ports:
       - "3001:3000"
     volumes:
-      - tbc-bot-sessions:/usr/src/app/sessions
       - tbc-bot-data:/usr/src/app/data
     env_file:
       - .env
@@ -22,7 +21,5 @@ networks:
     driver: bridge
 
 volumes:
-  tbc-bot-sessions:
-    driver: local
   tbc-bot-data:
     driver: local

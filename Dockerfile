@@ -7,10 +7,10 @@ RUN npm ci --only=production
 
 COPY . .
 
-RUN mkdir -p sessions data
+RUN mkdir -p data
 
 EXPOSE 3000
 
-VOLUME ["/usr/src/app/sessions", "/usr/src/app/data"]
+VOLUME ["/usr/src/app/data"]
 
 CMD ["npm", "start"]
