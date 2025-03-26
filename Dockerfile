@@ -13,4 +13,4 @@ EXPOSE 3000
 
 VOLUME ["/usr/src/app/sessions", "/usr/src/app/data"]
 
-CMD ["node", "src/index.js"]
+CMD ["npm", "start"]
