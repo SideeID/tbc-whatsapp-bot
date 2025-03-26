@@ -9,7 +9,7 @@ services:
       - "3001:3000"
     volumes:
       - tbc-bot-sessions:/usr/src/app/sessions
-      - tbc-bot-db:/usr/src/app/database.sqlite
+      - tbc-bot-data:/usr/src/app/data
     env_file:
       - .env
     networks:
@@ -22,5 +22,5 @@ networks:
 volumes:
   tbc-bot-sessions:
     driver: local
-  tbc-bot-db:
+  tbc-bot-data:
     driver: local

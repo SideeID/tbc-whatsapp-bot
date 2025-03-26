@@ -10,7 +10,7 @@ const config = {
   host: process.env.DB_HOST || 'localhost',
   dialect: process.env.DB_DIALECT || 'sqlite',
   storage:
-    process.env.DB_STORAGE || path.join(__dirname, '../../../database.sqlite'),
+    process.env.DB_PATH || path.join(__dirname, '../../../database.sqlite'),
   logging: false,
 };
 
