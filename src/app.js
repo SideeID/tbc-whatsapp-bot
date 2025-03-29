@@ -51,23 +51,9 @@ const startWhatsAppBot = async () => {
           : true;
 
       if (shouldReconnect) {
-        console.log(
-          'Connection closed due to error, attempting to reconnect...',
-        );
-        setTimeout(async () => {
-          console.log('Recreating WhatsApp connection...');
-          const { state, saveCreds } = await useMultiFileAuthState('sessions');
-
-          const newSock = makeWASocket({
-            printQRInTerminal: true,
-            auth: state,
-            logger: pino({ level: 'silent' }),
-          });
-
-          sock = newSock;
-
-          sock.ev.on('creds.update', saveCreds);
-        }, 5000);
+        console.log('Connection closed due to error, reconnecting...');
+        // Instead of trying to reassign sock, we restart the whole bot
+        startWhatsAppBot();
       } else {
         console.log('Connection closed. You are logged out.');
       }
