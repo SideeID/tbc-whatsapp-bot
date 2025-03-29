@@ -29,7 +29,7 @@ const startWhatsAppBot = async () => {
   sock.isConnected = () => sock.user !== undefined;
 
   const apiApp = setupApi(sock);
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 3001;
 
   apiApp.listen(PORT, () => {
     console.log(`API server listening on port ${PORT}`);

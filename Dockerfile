@@ -9,7 +9,7 @@ COPY . .
 
 RUN mkdir -p data
 
-EXPOSE 3000
+EXPOSE 3001
 
 VOLUME ["/usr/src/app/data"]
 
