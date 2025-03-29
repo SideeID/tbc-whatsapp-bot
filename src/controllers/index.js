@@ -43,14 +43,14 @@ async function handleIncomingMessage(sock, message) {
 
     case 'menu':
       if (lowerText === 'a') {
-        await sessionManager.updateSessionState(phoneNumber, 'screening');
-        await handleScreening(sock, sender, 'start', message);
-      } else if (lowerText === 'b') {
-        await sessionManager.updateSessionState(phoneNumber, 'info');
-        await handleInfo(sock, sender, 'start', message);
-      } else if (lowerText === 'c') {
         await sessionManager.updateSessionState(phoneNumber, 'qna');
         await handleQnA(sock, sender, 'start', message);
+      } else if (lowerText === 'b') {
+        await sessionManager.updateSessionState(phoneNumber, 'screening');
+        await handleScreening(sock, sender, 'start', message);
+      } else if (lowerText === 'c') {
+        await sessionManager.updateSessionState(phoneNumber, 'info');
+        await handleInfo(sock, sender, 'start', message);
       } else {
         await sock.sendMessage(sender, {
           text: 'Pilihan tidak valid. Silakan pilih A, B, atau C.',
@@ -82,7 +82,7 @@ async function handleGlobalAdminCommands(sock, sender, phoneNumber, message) {
   if (message.toLowerCase().includes('selesai')) {
     const isAdmin = await checkIfAdmin(phoneNumber);
     if (!isAdmin) {
-      return false; 
+      return false;
     }
 
     console.log(`Admin ${phoneNumber} attempting global selesai command`);
@@ -103,7 +103,7 @@ async function handleGlobalAdminCommands(sock, sender, phoneNumber, message) {
       await sock.sendMessage(sender, {
         text: 'Format perintah tidak valid. Gunakan format: selesai [nomor_pengguna]',
       });
-      return true; 
+      return true;
     }
 
     try {
@@ -161,13 +161,13 @@ async function handleGlobalAdminCommands(sock, sender, phoneNumber, message) {
       });
     }
 
-    return true; 
+    return true;
   }
 
   if (message.toLowerCase() === 'status admin') {
     const isAdmin = await checkIfAdmin(phoneNumber);
     if (!isAdmin) {
-      return false; 
+      return false;
     }
 
     try {
@@ -199,10 +199,10 @@ async function handleGlobalAdminCommands(sock, sender, phoneNumber, message) {
       });
     }
 
-    return true; 
+    return true;
   }
 
-  return false; 
+  return false;
 }
 
 async function checkIfAdmin(phoneNumber) {
@@ -223,7 +223,7 @@ async function sendWelcomeMessage(sock, to) {
 
 async function sendMenuMessage(sock, to) {
   await sock.sendMessage(to, {
-    text: `*MENU LAYANAN BOT TBC*\n\nPilih layanan dengan mengetik huruf yang sesuai:\n\nA. Screening TBC\nB. Informasi TBC\nC. QnA TBC\n\nContoh: ketik *A* untuk melakukan Screening TBC.`,
+    text: `*MENU LAYANAN BOT TBC*\n\nPilih layanan dengan mengetik huruf yang sesuai:\n\nA. QnA TBC\nB. Screening TBC\nC. Informasi TBC\n\nContoh: ketik *A* untuk QnA TBC.`,
   });
 }
 
