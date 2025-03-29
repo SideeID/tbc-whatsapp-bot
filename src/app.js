@@ -17,7 +17,11 @@ if (!fs.existsSync(sessionsDir)) {
   fs.mkdirSync(sessionsDir, { recursive: true });
 }
 
-const startWhatsAppBot = async () => {
+// Initialize server outside the function so it's only created once
+let apiServer = null;
+let isServerRunning = false;
+
+const connectToWhatsApp = async () => {
   const { state, saveCreds } = await useMultiFileAuthState('sessions');
 
   const sock = makeWASocket({
@@ -27,13 +31,6 @@ const startWhatsAppBot = async () => {
   });
 
   sock.isConnected = () => sock.user !== undefined;
-
-  const apiApp = setupApi(sock);
-  const PORT = process.env.PORT || 3001;
-
-  apiApp.listen(PORT, () => {
-    console.log(`API server listening on port ${PORT}`);
-  });
 
   sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr } = update;
@@ -52,8 +49,8 @@ const startWhatsAppBot = async () => {
 
       if (shouldReconnect) {
         console.log('Connection closed due to error, reconnecting...');
-        // Instead of trying to reassign sock, we restart the whole bot
-        startWhatsAppBot();
+        // Only reconnect WhatsApp, don't restart the server
+        connectToWhatsApp();
       } else {
         console.log('Connection closed. You are logged out.');
       }
@@ -76,6 +73,36 @@ const startWhatsAppBot = async () => {
   });
 
   sock.ev.on('creds.update', saveCreds);
+
+  return sock;
+};
+
+const startWhatsAppBot = async () => {
+  // Start WhatsApp connection
+  const sock = await connectToWhatsApp();
+
+  // Only start the API server once
+  if (!isServerRunning) {
+    const apiApp = setupApi(sock);
+    const PORT = process.env.PORT || 3001;
+
+    apiServer = apiApp.listen(PORT, () => {
+      console.log(`API server listening on port ${PORT}`);
+      isServerRunning = true;
+    });
+
+    // Handle server errors
+    apiServer.on('error', (error) => {
+      if (error.code === 'EADDRINUSE') {
+        console.error(
+          `Port ${PORT} is already in use. Please use a different port.`,
+        );
+        process.exit(1);
+      } else {
+        console.error('API server error:', error);
+      }
+    });
+  }
 
   return sock;
 };

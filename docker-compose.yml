@@ -6,7 +6,7 @@ services:
     container_name: tbc-whatsapp-bot
     restart: unless-stopped
     ports:
-      - "3001:3000"
+      - "3001:3001"
     volumes:
       - tbc-bot-data:/usr/src/app/data
     env_file:
@@ -15,11 +15,9 @@ services:
       - PORT=3001
     networks:
       - tbc-bot-network
-
 networks:
   tbc-bot-network:
     driver: bridge
-
 volumes:
   tbc-bot-data:
     driver: local
