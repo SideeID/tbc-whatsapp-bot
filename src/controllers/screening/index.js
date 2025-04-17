@@ -219,12 +219,20 @@ async function handleScreening(sock, sender, message) {
   }
 
   if (screeningData.contacts.length < 3) {
-    const phoneRegex = /^(0|62|\+62)?[0-9]{9,12}$/;
+    const phoneRegex = /^(0|62|\+62)?[0-9]{9,13}$/;
 
     if (phoneRegex.test(message)) {
       let contactNumber = message.replace(/^0/, '62');
       if (!contactNumber.startsWith('62')) {
         contactNumber = '62' + contactNumber;
+      }
+
+      const digitsOnly = contactNumber.replace(/\D/g, '');
+      if (digitsOnly.length < 10 || digitsOnly.length > 13) {
+        await sock.sendMessage(sender, {
+          text: 'Nomor HP harus terdiri dari 10-13 digit. Silakan masukkan nomor WhatsApp yang valid (contoh: 08xxxxxxxxxx atau 628xxxxxxxxxx).',
+        });
+        return;
       }
 
       screeningData.contacts.push(contactNumber);
@@ -247,7 +255,7 @@ async function handleScreening(sock, sender, message) {
       }
     } else {
       await sock.sendMessage(sender, {
-        text: 'Nomor HP tidak valid. Silakan masukkan nomor WhatsApp yang valid (contoh: 08xxxxxxxxxx atau 628xxxxxxxxxx).',
+        text: 'Nomor HP tidak valid. Silakan masukkan nomor WhatsApp yang valid (contoh: 08xxxxxxxxxx atau 628xxxxxxxxxx). Nomor harus terdiri dari 10-13 digit.',
       });
     }
     return;
