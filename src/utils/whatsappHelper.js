@@ -1,4 +1,4 @@
-const { getSocket } = require('../app');
+const socketStore = require('./socketStore');
 
 /**
  * Fungsi untuk mengirim pesan WhatsApp
@@ -8,7 +8,7 @@ const { getSocket } = require('../app');
  */
 async function sendMessage(jid, message) {
   try {
-    const socket = getSocket();
+    const socket = socketStore.getSocket();
 
     if (!socket) {
       throw new Error('WhatsApp connection not established');
