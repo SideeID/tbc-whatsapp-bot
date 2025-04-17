@@ -68,7 +68,14 @@ Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan
       break;
 
     case 'screening':
-      await handleScreening(sock, sender, textMessage, message);
+      // await handleScreening(sock, sender, textMessage, message);
+      await sock.sendMessage(sender, {
+        text: `Tahukah Anda? Di tingkat nasional, Jawa Timur mendapatkan peringkat ke 2 dengan jumlah kasus tuberkulosis terbanyak, dan di tingkat Jawa Timur, Jember mendapatkan peringkat 2 dengan jumlah kasus tuberkulosis terbanyak. 
+Ayo ambil bagian dalam program eliminasi tuberkulosis sebelum tahun 2030 dengan melakukan cek status kesehatan terkait tuberkulosis secara gratis dengan klik link berikut:
+https://sekawanstb.com/screening 
+
+Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan ketik menu dan pilih C`,
+      });
       break;
 
     case 'info':
