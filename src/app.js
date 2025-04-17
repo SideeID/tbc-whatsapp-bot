@@ -11,6 +11,7 @@ const path = require('path');
 const { handleIncomingMessage } = require('./controllers');
 const { isWithinWorkHours } = require('./utils/helpers');
 const { setupApi } = require('./api');
+const socketStore = require('./utils/socketStore');
 
 const sessionsDir = path.join(__dirname, '..', 'sessions');
 if (!fs.existsSync(sessionsDir)) {
@@ -29,6 +30,8 @@ const connectToWhatsApp = async () => {
     auth: state,
     logger: pino({ level: 'silent' }),
   });
+
+  socketStore.setSocket(sock);
 
   sock.isConnected = () => sock.user !== undefined;
 
