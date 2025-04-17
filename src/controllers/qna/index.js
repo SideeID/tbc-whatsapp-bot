@@ -68,7 +68,8 @@ const tbcQuestions = [
 
 async function handleQnA(sock, sender, message) {
   if (message === 'start') {
-    let questionList = '*QnA TBC - Pertanyaan Umum*\n\n';
+    let questionList =
+      '*QnA TBC - Pertanyaan Umum*\n\n*Sebelum melakukan skrining, yuk kita kenal lebih dekat dengan TBC*\n';
     tbcQuestions.forEach((q) => {
       questionList += `${q.id}. ${q.question}\n`;
     });
@@ -334,7 +335,7 @@ END:VCARD`;
     const question = tbcQuestions[questionNumber - 1];
 
     await sock.sendMessage(sender, {
-      text: `*${question.question}*\n\n${question.answer}\n\n> Setelah mendapatkan informasi ini, apakah Anda tertarik untuk melakukan skrining TBC? Ketik *A* untuk melakukan skrining atau *menu* untuk kembali ke menu utama.`,
+      text: `*${question.question}*\n\n${question.answer}\n\n> Setelah mendapatkan informasi ini, apakah Anda tertarik untuk melakukan skrining TBC? Ketik *B* untuk melakukan skrining atau *menu* untuk kembali ke menu utama.`,
     });
     return;
   }
