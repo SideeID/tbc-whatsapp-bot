@@ -9,6 +9,7 @@ services:
       - "3001:3001"
     volumes:
       - tbc-bot-data:/usr/src/app/data
+      - ./sessions_backup:/usr/src/app/sessions
     env_file:
       - .env
     environment:
