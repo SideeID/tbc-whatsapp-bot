@@ -55,7 +55,7 @@ async function handleIncomingMessage(sock, message) {
 Ayo ambil bagian dalam program eliminasi tuberkulosis sebelum tahun 2030 dengan melakukan cek status kesehatan terkait tuberkulosis secara gratis dengan klik link berikut:
 https://sekawanstb.com/screening 
 
-Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan ketik menu dan pilih C`,
+Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan *ketik menu dan pilih C*`,
         });
       } else if (lowerText === 'c') {
         await sessionManager.updateSessionState(phoneNumber, 'info');
@@ -74,7 +74,7 @@ Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan
 Ayo ambil bagian dalam program eliminasi tuberkulosis sebelum tahun 2030 dengan melakukan cek status kesehatan terkait tuberkulosis secara gratis dengan klik link berikut:
 https://sekawanstb.com/screening 
 
-Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan ketik menu dan pilih C`,
+Setelah melakukan skrining, kamu bisa menanyakan berbagai hal terkait TBC dengan *ketik menu dan pilih C*`,
       });
       break;
 
