@@ -2,8 +2,8 @@ const db = require('../database/models');
 const socketStore = require('./socketStore');
 
 const sessionTimeouts = {};
-const FIRST_TIMEOUT = 5 * 60 * 1000; 
-const SECOND_TIMEOUT = 5 * 60 * 1000; 
+const FIRST_TIMEOUT = 5 * 60 * 1000;
+const SECOND_TIMEOUT = 5 * 60 * 1000;
 
 async function getOrCreateSession(phoneNumber) {
   try {
@@ -120,7 +120,7 @@ async function sendInactivityMessage(phoneNumber, messageType) {
       });
     } else if (messageType === 2) {
       await sock.sendMessage(jid, {
-        text: "Terima kasih sudah menggunakan layanan WhatsApp Bot dari Sekawan's TB Jember. Kamu bisa menghubungi kami lagi di nomor yang sama atau akses website: https://sekawanstb.com/ dan Instagram: @sekawanstb_jember",
+        text: "Terima kasih sudah menggunakan layanan WhatsApp Bot dari Sekawan's TB Jember. Kamu bisa menghubungi kami lagi di nomor yang sama atau akses website: https://sekawanstb.my.id/ dan Instagram: @sekawanstb_jember",
       });
 
       if (sessionTimeouts[phoneNumber]) {
