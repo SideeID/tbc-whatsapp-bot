@@ -34,11 +34,13 @@ cd tbc-whatsapp-bot
 ```
 
 2. Instal dependensi:
+
 ```bash
 npm install
 ```
 
 3. Buat file `.env` di root proyek berdasarkan contoh:
+
 ```
 PORT=3000
 NODE_ENV=development
@@ -55,6 +57,7 @@ DB_DIALECT=sqlite
 ```
 
 4. Jalankan bot dalam mode pengembangan:
+
 ```bash
 npm run dev
 ```
@@ -68,12 +71,15 @@ npm run dev
 ## Fitur untuk Pengguna
 
 ### Menu Utama
+
 Pengguna dapat mengakses tiga layanan utama:
+
 - **A. Screening TBC**: Penilaian risiko TBC interaktif
 - **B. Informasi TBC**: Layanan informasi TBC berbasis AI
 - **C. QnA TBC**: Pertanyaan umum tentang TBC
 
 ### Screening TBC
+
 - Pengumpulan informasi pribadi (nama, usia, jenis kelamin)
 - Penilaian berdasarkan gejala batuk, gejala lain, dan faktor risiko
 - Klasifikasi hasil (dugaan positif/negatif)
@@ -81,11 +87,13 @@ Pengguna dapat mengakses tiga layanan utama:
 - Berbagi kontak untuk penyebaran kesadaran
 
 ### Informasi TBC (Sekawan AI)
+
 - Tanyakan apa saja tentang Tuberkulosis
 - Dapatkan informasi faktual dari sumber medis terpercaya
 - Respons berbasis AI dalam format percakapan
 
 ### Tanya Jawab TBC
+
 - Pertanyaan dan jawaban yang telah disiapkan tentang TBC
 - Opsi untuk terhubung dengan admin untuk bantuan personal
 - Sistem antrean admin untuk penanganan efisien
@@ -93,12 +101,14 @@ Pengguna dapat mengakses tiga layanan utama:
 ## Fitur untuk Admin
 
 ### Perintah Admin
+
 Admin dapat menggunakan perintah berikut dari status chat mana pun:
 
 - `selesai [nomor_pengguna]`: Menandai percakapan dengan pengguna sebagai selesai
 - `status admin`: Memeriksa status admin, penugasan saat ini, dan antrean
 
 ### Sistem Antrean
+
 - Distribusi adil pertanyaan pengguna di antara admin
 - Penugasan otomatis ketika admin tersedia
 - Sistem notifikasi untuk pertanyaan baru
@@ -167,4 +177,3 @@ Kontribusi sangat dipersilakan! Jangan ragu untuk mengirimkan Pull Request.
 - [WhatsApp Web API](https://github.com/WhiskeySockets/Baileys)
 - [Google Gemini AI](https://ai.google.dev/)
 - World Health Organization dan CDC untuk pedoman informasi TBC
-
