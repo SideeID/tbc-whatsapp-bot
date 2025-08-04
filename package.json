@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "reset": "node reset-session.js"
+    "reset": "node reset-session.js",
+    "clean": "node -e \"const fs=require('fs'); const path='sessions'; if(fs.existsSync(path)) fs.rmSync(path, {recursive:true, force:true}); console.log('Sessions cleaned');\""
   },
   "keywords": [
     "whatsapp",
